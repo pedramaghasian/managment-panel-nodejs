@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+  <%- include('../includes/head') -%>
+  <link rel="stylesheet" href="/css/profile.css" />
+
+  <body>
+    <%- include('../includes/nav') -%>
+
+    <!-- user profile -->
+    <div class="container emp-profile">
+      <form method="post">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="profile-head">
+      
+
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    id="home-tab"
+                    data-toggle="tab"
+                    role="tab"
+                    aria-controls="home"
+                    aria-selected="true"
+                    >شرکت من</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <button
+              type="button"
+              class="profile-edit-btn btn-warning text-dark "
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              data-bs-whatever="@mdo"
+            >
+              ویرایش شرکت
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="tab-content profile-tab" id="myTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="home"
+                role="tabpanel"
+                aria-labelledby="home-tab"
+              >
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>نام شرکت: </label>
+                  </div>
+                  <div class="col-md-6">
+                    <p><%= company.company_name %></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>شماره ثبت: </label>
+                  </div>
+                  <div class="col-md-6">
+                    <p><%= company.registration_number %></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>شهر: </label>
+                  </div>
+                  <div class="col-md-6">
+                    <p><%= company.city %></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>استان: </label>
+                  </div>
+                  <div class="col-md-6">
+                    <p><%= company.state %></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>شماره تماس: </label>
+                  </div>
+                  <div class="col-md-6">
+                    <p><%= company.phone_number %></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>تاریخ ثبت: </label>
+                  </div>
+                  <div class="col-md-6">
+                    <p><%= date(company.date_of_registration ).format("MMM Do YY");%></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- my empoyees -->
+        <div class="row mt-5">
+          <div class="col-md-6">
+            <div class="profile-head">
+             
+
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    id="home-tab"
+                    data-toggle="tab"
+                    role="tab"
+                    aria-controls="home"
+                    aria-selected="true"
+                    > کارمندان من</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <a
+              class="profile-edit-btn btn btn-success text-light"
+              href="/employee/new"
+            >
+              کارمند جدید
+            </a>
+          </div>
+        </div>
+        <!------------------ -->
+        <div class="row">
+          <div class="col-md-8">
+            <div class="tab-content profile-tab" id="myTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="home"
+                role="tabpanel"
+                aria-labelledby="home-tab"
+              >
+
+                <% employee.forEach(em=>{ %>
+               
+                  <div class="row my-2">
+                    <div class="col-md-6">
+                   
+                      <label> نام و نام خانوادگی: </label>
+                      <% if(em.isManager==true){ %>
+                        <span class="badge bg-warning text-dark">مدیر</span>
+                        <% } %> 
+                    </div>
+                    <div class="col-md-6 d-flex flex-row justify-content-between">
+                      <p  class="text-capitalize fs-6" data-bs-toggle="tooltip" data-bs-placement="left" title="برای ویرایش کلیک کنید">
+                        <a class="text-decoration-none" href="/employee/<%=em._id%>"><%= em.first_name +' '+em.last_name %></a>
+                      </p>
+                      <form action="/employee/delete" method="POST"></form>
+                      <form class="d-flex flex-row" action="/employee/delete" method="POST">
+                        <input type="hidden" name="employeeId" value="<%=em._id%>">
+                        <input type="hidden" name="companyId" value="<%=em.companyId%>">
+                        <button type="submit" class="btn btn-danger btn-sm mx-4 px-3 py-0 "  style="width: 65px;height: 18px;">حذف</button>
+                      </form>
+                    </div>
+                  </div>
+                <% }) %>  
+              </div>
+            </div>
+          </div>
+        </div>
+        <!------------------ -->
+        <!-- end of my empoyees -->
+      </form>
+    </div>
+    <!-- end of usr profile -->
+
+    <!-- modal -->
+
+    <div
+      class="modal fade my-5"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">صفحه تغییر شرکت</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="/company/edit" method="POST">
+              <div class="mb-3">
+                <label for="company_name" class="col-form-label"
+                  >نام شرکت</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="company_name"
+                  name="company_name"
+                  value="<%= company.company_name %> "
+                />
+              </div>
+              <div class="mb-3">
+                <label for="registration_number" class="col-form-label"
+                  >شماره ثبت</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="registration_number"
+                  name="registration_number"
+                  value="<%= company.registration_number %> "
+                />
+              </div>
+              <div class="mb-3">
+                <label for="city" class="col-form-label">شهر</label>
+                <input
+                  type="city"
+                  class="form-control"
+                  id="city"
+                  name="city"
+                  value="<%= company.city %> "
+                />
+              </div>
+              <div class="mb-3">
+                <label for="state" class="col-form-label">استان</label>
+                <input
+                  type="state"
+                  class="form-control"
+                  id="state"
+                  name="state"
+                  value="<%= company.state %> "
+                />
+              </div>
+              <div class="mb-3">
+                <label for="phone_number" class="col-form-label"
+                  >شماره تماس</label
+                >
+                <input
+                  type="phone_number"
+                  class="form-control"
+                  id="phone_number"
+                  name="phone_number"
+                  value="<%= company.phone_number %> "
+                />
+              </div>
+                      <!-- date of birth -->
+        <div class="mb-3">
+          <label for="date_of_registration" class="c col-form-label ">تاریخ تولد</label>
+          <div class="">
+            <input
+              type="date"
+              class="form-control"
+              id="date_of_registration"
+              name="date_of_registration"
+              
+            />
+          </div>
+        </div>
+        <!-- end date of birth -->
+
+              <input type="hidden" name="companyId" value="<%= company._id%>" />
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  خروج
+                </button>
+                <button type="submit" class="btn btn-warning">
+                  ثبت تغییرات
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end of modal -->
+
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      })
+  </script>
+  
+    <%- include('../includes/footer') -%>
+
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+  <%- include('../includes/head') -%>
+  <link rel="stylesheet" href="/css/profile.css" />
+
+  <body>
+    <%- include('../includes/nav') -%>
+
+    <!-- user profile -->
+    <div class="container emp-profile">
+      <form method="post">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="profile-head">
+              <h5><%=employee.first_name %></h5>
+              <br />
+
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    id="home-tab"
+                    data-toggle="tab"
+                    role="tab"
+                    aria-controls="home"
+                    aria-selected="true"
+                    >کارمند</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <button
+              type="button"
+              class="profile-edit-btn btn-warning text-dark"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              data-bs-whatever="@mdo"
+            >
+              ویرایش کارمند
+            </button>
+          </div>
+    
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="tab-content profile-tab" id="myTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="home"
+                role="tabpanel"
+                aria-labelledby="home-tab"
+              >
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>نام : </label>
+                  </div>
+                  <div class="col-md-6">
+                    <p><%= employee.first_name %></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>نام خانوادگی: </label>
+                  </div>
+                  <div class="col-md-6">
+                    <p><%= employee.last_name %></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>شماره ملی: </label>
+                  </div>
+                  <div class="col-md-6">
+                    <p><%= employee.national_number %></p>
+                  </div>
+                </div>
+           
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>جنسیت: </label>
+                  </div>
+                  <div class="col-md-6">
+                    <p><%= employee.gender %></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label> سمت: </label>
+                  </div>
+                  <div class="col-md-6">
+                    <p><%= employee.isManager===true?'manager':'employee' %></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>تاریخ تولد: </label>
+                  </div>
+                  <div class="col-md-6">
+                    <p><%= date(employee.birth_date ).format("MMM Do YY");%></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label> شرکت: </label>
+                  </div>
+                  <div class="col-md-6">
+                    <p><%= employee.companyId.company_name %></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- end of usr profile -->
+
+    <!-- modal -->
+
+    <div
+      class="modal fade my-5"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">صفحه تغییر مشخصات کارمند</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="/employee/edit" method="POST">
+              <div class="mb-3">
+                <label for="first_name" class="col-form-label"
+                  >نام </label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="first_name"
+                  name="first_name"
+                  value="<%= employee.first_name %> "
+                />
+              </div>
+              <div class="mb-3">
+                <label for="last_name" class="col-form-label">نام خانوادگی</label>
+                <input
+                  type="last_name"
+                  class="form-control"
+                  id="last_name"
+                  name="last_name"
+                  value="<%= employee.last_name %> "
+                />
+              </div>
+              <div class="mb-3">
+                <label for="national_number" class="col-form-label"
+                  >شماره ملی</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="national_number"
+                  name="national_number"
+                  value="<%= employee.national_number %> "
+                />
+              </div>
+        
+      
+                     <!-- isManager -->
+        <div class="mb-3">
+          <label for="isManager" class=" col-form-label ">سمت</label>
+         <div class="">
+          <select id="isManager" name="isManager"class="form-select" >
+            <option value="nothing" selected disabled hidden>انتخاب کنید</option>
+           <option value="manager">مدیر</option>
+           <option value="employee">کارمند</option>
+         </select>
+       </div>
+       </div>
+        <!-- end isManager -->
+        <!-- date of birth -->
+        <div class="mb-3">
+          <label for="date" class="c col-form-label ">تاریخ تولد</label>
+          <div class="">
+            <input
+              type="date"
+              class="form-control"
+              id="date"
+              name="birth_date"
+              
+            />
+          </div>
+        </div>
+        <!-- end date of birth -->
+          
+
+              <input type="hidden" name="employeeId" value="<%= employee._id%>" />
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  خروج
+                </button>
+                <button type="submit" class="btn btn-warning">
+                  ثبت تغییرات
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end of modal -->
+
+    <%- include('../includes/footer') -%>
+  </body>
+</html>
+
+

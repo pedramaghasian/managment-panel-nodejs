@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+  <%- include('../includes/head') -%>
+  <script src="/js/tableHandler.js" defer></script>
+  <body>
+    <%- include('../includes/nav') -%>
+
+    <div class="container py-5 my-5 bg-white border border-1 rounded">
+      <div class="row">
+        <table id="table" class="table">
+          <thead>
+            <tr class="text-center">
+              <th class="h5" scope="col">شماره</th>
+              <th class="h5" scope="col">نام </th>
+              <th class="h5" scope="col">نام خانوادگی </th>
+              <th class="h5" scope="col">تاریخ تولد</th>
+              <th class="h5" scope="col">عملیات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% employees.forEach((employee,index)=>{ %>
+            <tr class="text-center" data-id="<%=employee._id %> ">
+              <th scope="row"><%= index+1 %></th>
+              <td class="h6 lead"><%= employee.first_name %></td>
+              <td class="h6 lead"><%= employee.last_name%></td>
+              <td class="h6 lead" style="direction: ltr;">
+                <%= date(employee.birth_date , "YYYYMMDD").fromNow();%>
+              </td>
+              <td class="h6 lead d-flex flex-row justify-content-center">
+                <div class="mx-1">
+                  <a
+                    class="btn btn-sm btn-warning"
+                    href="/employee/<%=employee._id%>"
+                    >ویرایش</a
+                  >
+                </div>
+                <form action="/employee/delete" method="post">
+                  <input
+                    type="hidden"
+                    name="employeeId"
+                    value="<%=employee._id%>"
+                  />
+                  <button class="btn btn-sm btn-danger" type="submit">
+                    حذف
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <%- include('../includes/footer') -%>
+  </body>
+</html>

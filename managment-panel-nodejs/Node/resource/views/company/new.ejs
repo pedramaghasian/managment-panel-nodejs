@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+  <%- include('../includes/head') -%>
+  <body>
+    <%- include('../includes/nav') -%>
+    <!-- alert -->
+    <% if(alert){ %>
+    <div class="container w-50 mt-5">
+      <div class="alert alert-danger" role="alert"><%= alert %></div>
+    </div>
+    <% } %>
+    <!--end of alert -->
+    <form
+      method="POST"
+      active="/company/new"
+      class="mt-5 container bg-white w-50 border border-1 rounded"
+    >
+      <div class="py-3 row w-100">
+        <h3 class="text-success text-center">ثبت شرکت جدید</h3>
+      </div>
+      <div class="py-3 row w-100">
+        <label for="company_name" class="col-sm-2 col-form-label h5"
+          >نام شرکت</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            id="company_name"
+            name="company_name"
+          />
+        </div>
+      </div>
+      <div class="py-3 row w-100">
+        <label for="city" class="col-sm-2 col-form-label h5">شهر</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="city" name="city" />
+        </div>
+      </div>
+      <div class="py-3 row w-100">
+        <label for="state" class="col-sm-2 col-form-label h5">استان</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="state" name="state" />
+        </div>
+      </div>
+      <div class="py-3 row w-100">
+        <label for="rg-num" class="col-sm-2 col-form-label h5">شماره ثبت</label>
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            id="rg-num"
+            name="registration_number"
+          />
+        </div>
+      </div>
+      <div class="py-3 row w-100">
+        <label for="phone" class="col-sm-2 col-form-label h5">شماره تماس</label>
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            id="phone"
+            name="phone_number"
+          />
+        </div>
+      </div>
+      <div class="py-3 row w-100">
+        <label for="date" class="col-sm-2 col-form-label h5">تاریخ ثبت</label>
+        <div class="col-sm-10">
+          <input
+            type="date"
+            class="form-control"
+            id="date"
+            name="date_of_registration"
+          />
+        </div>
+      </div>
+      <div class="py-3 row w-100">
+        <div class="col-sm-2"></div>
+        <button class="btn btn-success col-sm-4 m-auto" type="submit">
+          ثبت
+        </button>
+      </div>
+    </form>
+    <%- include('../includes/footer') -%>
+  </body>
+</html>

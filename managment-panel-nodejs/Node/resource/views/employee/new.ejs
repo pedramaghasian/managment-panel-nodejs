@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+  <%- include('../includes/head') -%>
+  <body>
+    <%- include('../includes/nav') -%>
+    <!-- alert -->
+    <% if(alert){ %>
+    <div class="container w-50 mt-5">
+      <div class="alert alert-danger" role="alert"><%= alert %></div>
+    </div>
+    <% } %>
+    <!--end of alert -->
+    <form
+      method="POST"
+      action="/employee/new"
+      class="mt-5 container bg-white w-50 border border-1 rounded"
+    >
+      <div class="py-3 row w-100">
+        <h3 class="text-success text-center">ثبت کارمند جدید</h3>
+      </div>
+      <div class="py-3 row w-100">
+        <label for="first_name" class="col-sm-2 col-form-label h5"
+          >نام </label
+        >
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            id="first_name"
+            name="first_name"
+          />
+        </div>
+      </div>
+      <div class="py-3 row w-100">
+        <label for="last_name" class="col-sm-2 col-form-label h5">نام خانوادگی</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="last_name" name="last_name" />
+        </div>
+      </div>
+      <div class="py-3 row w-100">
+        <label for="national_number" class="col-sm-2 col-form-label h5">کدملی</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="national_number" name="national_number" />
+        </div>
+      </div>
+        <!-- gender -->
+        <div class="py-3 row w-100">
+           <label for="gender" class="col-sm-2 col-form-label  h5">جنسیت</label>
+          <div class="col-sm-10">
+            <select id="gender" name="gender"class="form-select" >
+              <option value="male">مرد</option>
+              <option value="female">زن</option>
+            </select>
+          </div>
+        </div>
+        <!-- end gender -->
+        <!-- isManager -->
+        <div class="py-3 row w-100">
+          <label for="isManager" class="col-sm-2 col-form-label  h5">سمت</label>
+         <div class="col-sm-10">
+          <select id="isManager" name="isManager"class="form-select" >
+           <option value="manager">مدیر</option>
+           <option value="employee">کارمند</option>
+         </select>
+       </div>
+       </div>
+        <!-- end isManager -->
+        <!-- company -->
+        <div class="py-3 row w-100">
+          <label for="companyId" class="col-sm-2 col-form-label  h5">شرکت</label>
+          <div class="col-sm-10">
+            <select id="companyId" name="companyId"class="form-select" >
+              <% companies.forEach(company=>{ %> 
+                <option name='companyId' value="<%=company._id%>"><%= company.company_name %> </option>
+                <% }) %> 
+            </select>
+          </div>
+        </div>
+        <!-- end company -->
+ 
+      <div class="py-3 row w-100">
+        <label for="date" class="col-sm-2 col-form-label h5">تاریخ تولد</label>
+        <div class="col-sm-10">
+          <input
+            type="date"
+            class="form-control"
+            id="date"
+            name="birth_date"
+          />
+        </div>
+      </div>
+      <div class="py-3 row w-100">
+        <div class="col-sm-2"></div>
+        <button class="btn btn-success col-sm-4 m-auto" type="submit">
+          ثبت
+        </button>
+      </div>
+    </form>
+    <%- include('../includes/footer') -%>
+  </body>
+</html>

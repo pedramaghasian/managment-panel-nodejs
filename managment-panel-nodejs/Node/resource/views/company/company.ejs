@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+  <%- include('../includes/head') -%>
+  <script src="/js/tableHandler.js" defer></script>
+  <body>
+    <%- include('../includes/nav') -%>
+
+<!-- datepicker -->
+<div class="container mt-5 p-2">
+  <div class=" mx-auto">
+    <form action="/company" method="GET">
+      <div class="card">
+        <div class="card-block p-2">
+            <h4 class="card-title my-2 text-center"> جست و جوی پیشرفته</h4>
+            <hr>
+         
+            <div class="form-group input-group d-flex flex-row justify-content-center my-4">
+              <div class="input-group-addon mx-2 h6 align-self-center">تاریخ شروع</div>
+              <input type="date" class="form-control " name="start-date"/>
+              <div class="input-group-addon mx-2 h6 align-self-center">تاریخ پایان</div>
+              <input type="date" class="form-control " name="end-date"/>
+            </div>
+            <div class='form-group d-flex flex-row justify-content-center '>
+              <input class="btn btn-success btn-sm px-5 "  type="submit" value="جست و جو"/>
+            </div>
+          </div>
+        </div>
+    </form>
+  </div>
+</div>
+<!-- end of datepicker -->
+
+    <div class="container py-5 my-5 bg-white border border-1 rounded">
+      <div class="row">
+        <table id="table" class="table">
+          <thead>
+            <tr class="text-center">
+              <th class="h5" scope="col">شماره</th>
+              <th class="h5" scope="col">نام شرکت</th>
+              <th class="h5" scope="col">شماره ثبت</th>
+              <th class="h5" scope="col">شهر</th>
+              <th class="h5" scope="col">تاریخ ثبت</th>
+              <th class="h5" scope="col">عملیات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% companies.forEach((company,index)=>{ %>
+            <tr class="text-center" data-id="<%=company._id %> ">
+              <th scope="row"><%= index+1 %></th>
+              <td class="h6 lead"><%= company.company_name %></td>
+              <td class="h6 lead"><%= company.registration_number%></td>
+              <td class="h6 lead"><%= company.city %></td>
+              <td class="h6 lead" style="direction: ltr">
+                <%= date(company.date_of_registration).format('L') %> 
+              </td>
+              <td class="h6 lead d-flex flex-row justify-content-center m-0">
+                <div class="mx-1">
+                  <a
+                    class="btn btn-sm btn-warning"
+                    href="/company/<%=company._id%>"
+                    >ویرایش</a
+                  >
+                </div>
+                <form action="/company/delete" method="post">
+                  <input
+                    type="hidden"
+                    name="companyId"
+                    value="<%=company._id%>"
+                  />
+                  <button class="btn btn-sm btn-danger" type="submit">
+                    حذف
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <%- include('../includes/footer') -%>
+  </body>
+</html>
